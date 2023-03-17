@@ -1,0 +1,113 @@
+commit ba0041eb59bb06c960087eb9dc9ae38daefe1630
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 17:32:59 2023 +0200
+
+    removed and renamed files
+
+ tiedostoja/file2.txt                 | 0
+ tiedostoja/{file1.txt => file22.txt} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 24d19d459acca7e129268ea4c8d5a6da2c24f43d
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 17:29:55 2023 +0200
+
+    added new directory with files
+
+ tiedostoja/file1.txt | 0
+ tiedostoja/file2.txt | 0
+ tiedostoja/file3.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 4aebe7e34823e1157eeb31065edfa5c5140c4c8a
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 17:24:32 2023 +0200
+
+    changes
+
+ eka.txt    | 1 +
+ kolmas.txt | 4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+commit 204f67db35571225fa7d2c597bd8c5a7f55f933b
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 17:21:28 2023 +0200
+
+    renamed file
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit a3e8100dd1fb48a7597e0a076a846f115261a0a1
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 17:15:48 2023 +0200
+
+    removed toinen.txt
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit f2210e63d778f327e337a35b60d820448e31a922
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 17:13:47 2023 +0200
+
+    more changes
+
+ tiedosto.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 39bc2a05fe88e140f1bcd32181179c86f20d4d0c
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 17:11:46 2023 +0200
+
+    changed tiedosto.txt
+
+ tiedosto.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+commit d9df9b55d223e0d9c3b2d33925d2c41ea4008639
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 17:07:08 2023 +0200
+
+    added stuff
+
+ stuff/test1.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 047ffc638c1f5423d7246f6973260d6df01e08d7
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 17:05:49 2023 +0200
+
+    changed files
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 01915b3b0831e44a31e22787b371c064ca917c60
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 17:03:44 2023 +0200
+
+    kolmas.txt created
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit f9becd0265fc0a6b860f8c0bce10dd6866514004
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 16:29:12 2023 +0200
+
+    change and added file
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 8965ea336eac77b460746619f9005fb052531d1a
+Author: Patrick Salmi <patrick.salmi@helsinki.fi>
+Date:   Fri Mar 17 16:27:01 2023 +0200
+
+    tiedosto.txt created
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
