@@ -13,7 +13,7 @@ A mouse is used to navigate and play the game.
 
 ## Functionality
 - Enemies come in waves down a predefined path towards the player's base
-- When an enemy reaches the player's base, health points are lost and when they reach zero, the game is over
+- If an enemy reaches the player's base, health points are lost and if they reach zero, the game is lost
 - The player can place towers on designated parts of the level which deal damage to enemies
 - The game features money which can be used to buy and upgrade towers
 - Money is earned by defeating enemies, clearing waves and selling towers
