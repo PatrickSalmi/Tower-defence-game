@@ -1,10 +1,11 @@
 import unittest
 from sprites.enemies import Enemies
 
+
 class TestEnemies(unittest.TestCase):
-    
+
     def setUp(self):
-        self.enemy = Enemies((100,200))
+        self.enemy = Enemies((100, 200))
 
     def test_correct_starting_position(self):
         # x = 100 - 50(image width) / 2 = 75

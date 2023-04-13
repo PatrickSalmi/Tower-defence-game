@@ -1,6 +1,7 @@
 import pygame
 from load_image import load_image
 
+
 class Enemies(pygame.sprite.Sprite):
     def __init__(self, start_pos):
         super().__init__()
