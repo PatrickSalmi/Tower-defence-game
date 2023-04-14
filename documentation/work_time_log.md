@@ -7,4 +7,4 @@
 | 04.4 | 5   | Enemy pathfinding |
 | 13.04 | 1   | pylint and coverage report fix |
 | 14.04 | 2  | Added wave mechanics |
-| Total | 10 |
+| Total | 12 |
