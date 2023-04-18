@@ -3,6 +3,8 @@
 ## Documentation
 [Requirements specifications](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/requirements_specifications.md)
 
+[Architecture](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/architecture.md)
+
 [Work time log](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/work_time_log.md)
 
 [Changelog](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/changelog.md)
