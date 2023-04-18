@@ -7,3 +7,4 @@
 ## Week 4
 
 - Added wave class which spawns waves with increasing numbers of enemies
+- Tested wave advance method
