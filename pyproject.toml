@@ -1,10 +1,9 @@
 [tool.poetry]
-name = "tower-defece-game"
+name = "tower-defence-game"
 version = "0.1.0"
 description = ""
 authors = ["Patrick Salmi <patrick.salmi@helsinki.fi>"]
 readme = "README.md"
-packages = [{include = "tower_defece_game"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
