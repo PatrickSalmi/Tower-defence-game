@@ -1,5 +1,9 @@
 # Tower defence game
 
+A simple tower defence game.
+
+## Release
+
 [Release](https://github.com/PatrickSalmi/Tower-defence-game/releases/tag/viikko5)
 
 ## Documentation
@@ -34,3 +38,10 @@ The test coverage report can be generated with the command:
 poetry run invoke coverage-report
 ```
 The report is generated in the *htmlcov* directory.
+
+### Lint
+
+Run pylint with the command:
+```
+poetry run invoke lint
+```
