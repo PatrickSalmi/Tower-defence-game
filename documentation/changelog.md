@@ -8,3 +8,7 @@
 
 - Added wave class which spawns waves with increasing numbers of enemies
 - Tested wave advance method
+
+## Week 5
+
+- Refactored the code
