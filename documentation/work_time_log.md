@@ -10,4 +10,5 @@
 | 18.4 | 2   | New test and architecture |
 | 23.4 | 3   | Refactoring and fixing imports |
 | 25.4 | 2   | Refactoring |
-| Total | 19 |
+| 02.5 | 7   | Added health, towers and more tests |
+| Total | 26 |
