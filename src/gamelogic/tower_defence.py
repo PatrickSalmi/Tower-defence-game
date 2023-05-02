@@ -14,6 +14,7 @@ class TowerDefence():
         self.enemy_count = 0
         self.enemy_spawn_interval = 2000
         self.last_enemy_spawn = pygame.time.get_ticks()
+        self.health = 5
 
     def spawn_enemies(self):
         time = pygame.time.get_ticks()
@@ -40,7 +41,16 @@ class TowerDefence():
     def draw_all(self, display):
         display.fill((0, 128, 0))
         pygame.draw.lines(display, (128, 128, 128), False, self.route, 20)
+        
+        font = pygame.font.SysFont("Arial", 32)
+        health_text = font.render("Health: {}".format(self.health), True, (255, 255, 255))
+        display.blit(health_text, (815, 10))
+        
         for enemy in self.enemies:
             enemy_rect = enemy.rect.move(enemy.x, enemy.y)
             enemy.update(self.path_line)
             display.blit(enemy.image, enemy_rect)
+            
+            if enemy.reached_end(self.path_line):
+                self.health -= 1
+                self.enemies.remove(enemy)

@@ -14,6 +14,9 @@ class Enemies(pygame.sprite.Sprite):
         self.y = start_pos[1] - self.height // 2
         self.speed = 1
         self.index = 1
+        
+    def reached_end(self, path_line):
+        return self.x >= path_line[-1][0] and self.y >= path_line[-1][1]
 
     def update(self, path_line):
 
