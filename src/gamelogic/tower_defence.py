@@ -1,11 +1,21 @@
 import pygame
 from gamelogic.enemies import Enemies
+from gamelogic.towers import Tower
 
 
 class TowerDefence():
     def __init__(self):
         self.route = [(50, 0), (50, 200), (400, 200),
                       (400, 400), (800, 400), (800, 720)]
+        
+        self.route_rect = []
+        
+        for i in range(len(self.route) - 1):
+            start = self.route[i]
+            end = self.route[i+1]
+            line_rect = pygame.Rect(start, (end[0]-start[0], end[1]-start[1]+30))
+            self.route_rect.append(line_rect)
+            
         self.enemy = Enemies(self.route[0])
         self.path_line = [(x-self.enemy.width//2, y-self.enemy.height//2)
                           for x, y in self.route]
@@ -15,6 +25,8 @@ class TowerDefence():
         self.enemy_spawn_interval = 2000
         self.last_enemy_spawn = pygame.time.get_ticks()
         self.health = 5
+        
+        self.towers = []
 
     def spawn_enemies(self):
         time = pygame.time.get_ticks()
@@ -37,6 +49,20 @@ class TowerDefence():
 
     def advance_wave(self):
         self.wave_nro += 1
+        
+    def valid_tower(self, tower_rect):
+        for line in self.route_rect:
+            if line.colliderect(tower_rect):
+                return False
+        return True
+    
+    def add_tower(self, x, y):
+        tower = Tower(x, y)
+        tower_rect = tower.rect.move(x - tower.rect.centerx, y - tower.rect.centery)
+        if self.valid_tower(tower_rect):
+            tower.rect.center = (x, y)
+            self.towers.append(tower)
+            
 
     def draw_all(self, display):
         display.fill((0, 128, 0))
@@ -54,3 +80,6 @@ class TowerDefence():
             if enemy.reached_end(self.path_line):
                 self.health -= 1
                 self.enemies.remove(enemy)
+                
+        for tower in self.towers:
+            display.blit(tower.image, tower.rect)
