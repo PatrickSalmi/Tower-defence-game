@@ -1,5 +1,5 @@
 import unittest
-from sprites.enemies import Enemies
+from gamelogic.enemies import Enemies
 
 
 class TestEnemies(unittest.TestCase):
