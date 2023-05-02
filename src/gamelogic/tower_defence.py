@@ -5,9 +5,10 @@ from gamelogic.enemies import Enemies
 class TowerDefence():
     def __init__(self):
         self.route = [(50, 0), (50, 200), (400, 200),
-            (400, 400), (800, 400), (800, 720)]
+                      (400, 400), (800, 400), (800, 720)]
         self.enemy = Enemies(self.route[0])
-        self.path_line = [(x-self.enemy.width//2, y-self.enemy.height//2) for x, y in self.route]
+        self.path_line = [(x-self.enemy.width//2, y-self.enemy.height//2)
+                          for x, y in self.route]
         self.wave_nro = 1
         self.enemies = []
         self.enemy_count = 0
@@ -36,8 +37,10 @@ class TowerDefence():
     def advance_wave(self):
         self.wave_nro += 1
 
-    def update_enemies(self, screen):
-        pygame.draw.lines(screen, (128, 128, 128), False, self.route, 20)
+    def draw_all(self, display):
+        display.fill((0, 128, 0))
+        pygame.draw.lines(display, (128, 128, 128), False, self.route, 20)
         for enemy in self.enemies:
-            enemy.draw(screen)
-            enemy.pathing(self.path_line)
+            enemy_rect = enemy.rect.move(enemy.x, enemy.y)
+            enemy.update(self.path_line)
+            display.blit(enemy.image, enemy_rect)

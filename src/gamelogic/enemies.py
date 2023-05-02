@@ -9,12 +9,13 @@ class Enemies(pygame.sprite.Sprite):
         self.image = load_image("robo.png")
         self.width = self.image.get_width()
         self.height = self.image.get_height()
+        self.rect = self.image.get_rect()
         self.x = start_pos[0] - self.width // 2
         self.y = start_pos[1] - self.height // 2
         self.speed = 1
         self.index = 1
 
-    def pathing(self, path_line):
+    def update(self, path_line):
 
         if self.index < len(path_line):
             next_x, next_y = path_line[self.index]
@@ -28,6 +29,3 @@ class Enemies(pygame.sprite.Sprite):
                 self.y -= self.speed
             else:
                 self.index += 1
-
-    def draw(self, screen):
-        screen.blit(self.image, (self.x, self.y))
