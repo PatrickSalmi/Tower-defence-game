@@ -12,3 +12,9 @@
 ## Week 5
 
 - Refactored the code
+
+## Week 6
+
+- added health (currently game closes when all health is lost)
+- added towers which are placed by left click
+- Tested towers
