@@ -21,13 +21,14 @@ class Gameloop:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
+            
+            if self.game.health <= 0:
+                return False
 
             if event.type == pygame.MOUSEBUTTONUP:
                 if event.pos[0] >= 0 and event.pos[0] <= 960 and event.pos[1] >= 0 and event.pos[1] <= 720:
                     self.game.add_tower(event.pos[0], event.pos[1])
 
-            if self.game.health <= 0:
-                return False
 
     def render(self):
         self.renderer.render()

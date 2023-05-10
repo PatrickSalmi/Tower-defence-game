@@ -10,25 +10,23 @@ class Enemies(pygame.sprite.Sprite):
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         self.rect = self.image.get_rect()
-        self.x = start_pos[0] - self.width // 2
-        self.y = start_pos[1] - self.height // 2
+        self.rect.center = start_pos
         self.speed = 1
         self.index = 1
 
     def reached_end(self, path_line):
-        return self.x >= path_line[-1][0] and self.y >= path_line[-1][1]
+        return self.rect.centerx >= path_line[-1][0] and self.rect.centery >= path_line[-1][1]
 
     def update(self, path_line):
-
         if self.index < len(path_line):
             next_x, next_y = path_line[self.index]
-            if self.x < next_x:
-                self.x += self.speed
-            elif self.x > next_x:
-                self.x -= self.speed
-            elif self.y < next_y:
-                self.y += self.speed
-            elif self.y > next_y:
-                self.y -= self.speed
+            if self.rect.centerx < next_x:
+                self.rect.centerx += self.speed
+            elif self.rect.centerx > next_x:
+                self.rect.centerx -= self.speed
+            elif self.rect.centery < next_y:
+                self.rect.centery += self.speed
+            elif self.rect.centery > next_y:
+                self.rect.centery -= self.speed
             else:
                 self.index += 1

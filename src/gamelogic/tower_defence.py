@@ -4,6 +4,9 @@ from gamelogic.towers import Tower
 
 
 class TowerDefence():
+    """Class for the game logic
+    
+    """
     def __init__(self):
         self.route = [(50, 0), (50, 200), (400, 200),
                       (400, 400), (800, 400), (800, 720)]
@@ -16,9 +19,7 @@ class TowerDefence():
             line_rect = pygame.Rect(
                 start, (end[0]-start[0], end[1]-start[1]+30))
             self.route_rect.append(line_rect)
-
-        self.enemy = Enemies(self.route[0])
-        self.path_line = [(x-self.enemy.width//2, y-self.enemy.height//2)
+        self.path_line = [(x-50//2, y-86//2)
                           for x, y in self.route]
         self.wave_nro = 1
         self.enemies = []
@@ -30,11 +31,13 @@ class TowerDefence():
         self.towers = []
 
     def spawn_enemies(self):
+        """spawns enemies 
+        """
         time = pygame.time.get_ticks()
         if self.enemy_count < self.wave_nro * 5:
             if time - self.last_enemy_spawn >= self.enemy_spawn_interval:
 
-                enemy = Enemies(self.route[0])
+                enemy = Enemies(self.path_line[0])
                 self.enemies.append(enemy)
                 self.last_enemy_spawn = time
                 self.enemy_count += 1
@@ -58,12 +61,23 @@ class TowerDefence():
         return True
 
     def add_tower(self, x, y):
+        """Adds a tower using the x and y values
+
+        Args:
+            x : x coordinate of the tower
+            y : y coordinate of the tower
+        """
+        
         tower = Tower(x, y)
         tower_rect = tower.rect.move(
             x - tower.rect.centerx, y - tower.rect.centery)
         if self.valid_tower(tower_rect):
             tower.rect.center = (x, y)
             self.towers.append(tower)
+            
+    def assign_targets(self, tower):
+        for enemy in self.enemies:
+            tower.calculate_distance(enemy)
 
     def draw_all(self, display):
         display.fill((0, 128, 0))
@@ -75,13 +89,15 @@ class TowerDefence():
         display.blit(health_text, (815, 10))
 
         for enemy in self.enemies:
-            enemy_rect = enemy.rect.move(enemy.x, enemy.y)
             enemy.update(self.path_line)
-            display.blit(enemy.image, enemy_rect)
+            display.blit(enemy.image, enemy.rect.center)
 
             if enemy.reached_end(self.path_line):
                 self.health -= 1
                 self.enemies.remove(enemy)
-
+                
         for tower in self.towers:
+            if tower.target is None:
+                self.assign_targets(tower)
+            tower.update(pygame.time.get_ticks(), self.enemies)
             display.blit(tower.image, tower.rect)
