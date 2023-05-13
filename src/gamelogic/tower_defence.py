@@ -1,6 +1,6 @@
 import pygame
 from pygame.sprite import Group
-from sprites.enemies import Enemies
+from gamelogic.wave_logic import Waves
 from sprites.towers import Tower
 from ui.ingame_menu import IngameMenu
 from ui.score_screen import ScoreScreen
@@ -14,7 +14,7 @@ class TowerDefence():
     def __init__(self):
         self.route = [(50, 0), (50, 200), (400, 200),
                       (400, 400), (800, 400), (800, 720)]
-        
+
         self.pause = False
 
         self.route_rect = []
@@ -24,50 +24,16 @@ class TowerDefence():
 
         self.ingame_menu = IngameMenu()
         self.score_screen = ScoreScreen()
-        
+
         self.score = 0
-        self.wave_nro = 1
-        self.waves = 2
         self.health = 5
         self.money = 20
         self.game_over = False
 
-        self.enemy_count = 0
-        self.enemy_spawn_interval = 1000
-        self.last_enemy_spawn = pygame.time.get_ticks()
+        self.waves = Waves()
 
-        self.enemies = Group()
         self.towers = Group()
         self.all_sprites = Group()
-
-    def spawn_enemies(self):
-        """Spawns enemies based on enemy_count and how much time has passed since last spawn
-        """
-        time = pygame.time.get_ticks()
-        if self.enemy_count < self.wave_nro * 5:
-            if time - self.last_enemy_spawn >= self.enemy_spawn_interval:
-
-                enemy = Enemies(self.route[0])
-                self.enemies.add(enemy)
-                self.all_sprites.add(enemy)
-                self.last_enemy_spawn = time
-                self.enemy_count += 1
-
-        elif self.enemy_count == self.wave_nro * 5:
-            if time - self.last_enemy_spawn >= 10000:
-                self.reset_wave()
-                self.advance_wave()
-
-    def reset_wave(self):
-        """Resets enemy_count and last_enemy_spawn
-        """
-        self.enemy_count = 0
-        self.last_enemy_spawn = pygame.time.get_ticks()
-
-    def advance_wave(self):
-        """Raises the wave number by one
-        """
-        self.wave_nro += 1
 
     def valid_tower(self, tower):
         """ Checks if a tower is being placed on the route or on another tower
@@ -96,11 +62,11 @@ class TowerDefence():
             x : x coordinate of the tower
             y : y coordinate of the tower
         """
-        
+
         tower = Tower(pos)
         if pos[0] < self.game_width - (tower.rect.width//2) and pos[1] < self.game_height - (tower.rect.height//2) and self.purchase_tower(tower):
-                self.towers.add(tower)
-                self.all_sprites.add(tower)
+            self.towers.add(tower)
+            self.all_sprites.add(tower)
 
     def purchase_tower(self, tower):
         if self.money >= tower.price and self.valid_tower(tower):
@@ -108,9 +74,9 @@ class TowerDefence():
             return True
 
         return False
-    
+
     def sell_tower(self, tower):
-        self.money += tower.price //2
+        self.money += tower.price // 2
         self.towers.remove(tower)
         self.all_sprites.remove(tower)
 
@@ -120,7 +86,7 @@ class TowerDefence():
         Args:
             tower: tower object
         """
-        for enemy in self.enemies:
+        for enemy in self.waves.enemies:
             if tower.target is None:
                 tower.calculate_distance(enemy)
             else:
@@ -154,13 +120,13 @@ class TowerDefence():
         pygame.draw.line(display, (0, 0, 0), (960, 0), (960, 720), 3)
 
         self.all_sprites.draw(display)
-        
+
         if self.game_over:
             self.score_screen.draw_all(display)
-            
-        self.ingame_menu.draw_all(display, self.health, self.money, self.wave_nro, self.waves)
-        
-        
+
+        self.ingame_menu.draw_all(
+            display, self.health, self.money, self.waves.wave_nro, self.waves.total_waves)
+
     def toggle_pause(self):
         self.pause = not self.pause
         self.ingame_menu.pause_button.alt = not self.ingame_menu.pause_button.alt
@@ -168,13 +134,13 @@ class TowerDefence():
     def update(self):
         if self.pause:
             return
-        self.spawn_enemies()
-        self.enemies.update(self.route)
 
-        for enemy in self.enemies:
+        self.waves.update(self.route, self.all_sprites)
+
+        for enemy in self.waves.enemies:
             if enemy.reached_end(self.route):
                 self.health -= 1
-                self.enemies.remove(enemy)
+                self.waves.enemies.remove(enemy)
                 self.all_sprites.remove(enemy)
 
         for tower in self.towers:
@@ -182,41 +148,39 @@ class TowerDefence():
                 self.assign_targets(tower)
 
             if tower.attack(pygame.time.get_ticks()):
-                self.enemies.remove(tower.target)
+                self.waves.enemies.remove(tower.target)
                 self.all_sprites.remove(tower.target)
                 self.money += 1
-        
-        if self.wave_nro > self.waves and not self.enemies:
+
+        if self.waves.wave_nro == self.waves.total_waves and not self.waves.enemies and self.waves.enemy_count == self.waves.wave_enemy_count[self.waves.total_waves-1]:
             self.end_game()
-                
+
+    def calculate_score(self):
+        self.score += (self.waves.wave_nro * 20)
+        self.score += (self.health * self.waves.wave_nro * 5)
+        self.score += (self.money * 2)
+
+    def end_game(self):
+        self.game_over = True
+        self.pause = True
+        self.calculate_score()
+        self.score_screen.get_score(
+            self.waves.wave_nro, self.health, self.money, self.score)
+        
     def reset_game(self):
         self.route = [(50, 0), (50, 200), (400, 200),
                       (400, 400), (800, 400), (800, 720)]
         self.pause = False
         self.ingame_menu.pause_button.alt = False
-        
+
         self.create_route_rect()
-        
+
         self.score = 0
-        self.wave_nro = 1
         self.health = 5
         self.money = 20
         self.game_over = False
 
-        self.enemy_count = 0
-        self.last_enemy_spawn = pygame.time.get_ticks()
-
-        self.enemies.empty()
+        self.waves = Waves()
+        self.waves.enemies.empty()
         self.towers.empty()
         self.all_sprites.empty()
-        
-    def calculate_score(self):
-        self.score += (self.wave_nro * 20)
-        self.score += (self.health * self.wave_nro * 5)
-        self.score += (self.money * 2)
-        
-    def end_game(self):
-        self.game_over = True
-        self.toggle_pause()
-        self.calculate_score()
-        self.score_screen.get_score(self.wave_nro, self.health, self.money, self.score)
