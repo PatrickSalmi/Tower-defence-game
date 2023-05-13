@@ -19,6 +19,7 @@ class Gameloop:
 
     def handle_events(self):
         pos = pygame.mouse.get_pos()
+        self.game.ingame_menu.set_tower_preview(pos)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
@@ -30,9 +31,24 @@ class Gameloop:
                 if self.game.ingame_menu.buy_tower.rect.collidepoint(pos):
                     if not self.game.ingame_menu.tower_selected:
                         self.game.ingame_menu.tower_selected = True
+
                 elif self.game.ingame_menu.tower_selected:
                     self.game.place_tower(pos)
                     self.game.ingame_menu.tower_selected = False
+                    self.game.ingame_menu.tower_preview = None
+                
+                elif self.game.ingame_menu.sell_button.rect.collidepoint(pos):
+                    if not self.game.ingame_menu.sell_mode:
+                        self.game.ingame_menu.sell_mode = True
+                        
+                elif self.game.ingame_menu.sell_mode:
+                    for tower in self.game.towers:
+                        if tower.rect.collidepoint(pos):
+                            self.game.sell_tower(tower)
+                            break
+                    self.game.ingame_menu.sell_mode = False
+                    
+                
             
 
     def render(self):

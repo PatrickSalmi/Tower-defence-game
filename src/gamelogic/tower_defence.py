@@ -101,6 +101,11 @@ class TowerDefence():
             return True
 
         return False
+    
+    def sell_tower(self, tower):
+        self.money += tower.price //2
+        self.towers.remove(tower)
+        self.all_sprites.remove(tower)
 
     def assign_targets(self, tower):
         """Assigns a enemy as a target for a tower
