@@ -1,5 +1,6 @@
 import pygame
 
+
 class Clock:
     def __init__(self):
         self._clock = pygame.time.Clock()
@@ -9,4 +10,3 @@ class Clock:
 
     def get_ticks(self):
         return pygame.time.get_ticks()
-    

@@ -6,7 +6,9 @@ from gameloops.clock import Clock
 
 
 def main():
-    display = pygame.display.set_mode((960, 720))
+    WIDTH = 1280
+    HEIGHT = 720
+    display = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Tower Defence")
 
     game = TowerDefence()
