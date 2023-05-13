@@ -18,6 +18,7 @@ class Gameloop:
             self.clock.tick(60)
 
     def handle_events(self):
+        pos = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
@@ -25,8 +26,14 @@ class Gameloop:
             if self.game.health <= 0:
                 return False
 
-            if event.type == pygame.MOUSEBUTTONUP:
-                self.game.add_tower(event.pos[0], event.pos[1])
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if self.game.ingame_menu.buy_tower.rect.collidepoint(pos):
+                    if not self.game.ingame_menu.tower_selected:
+                        self.game.ingame_menu.tower_selected = True
+                elif self.game.ingame_menu.tower_selected:
+                    self.game.place_tower(pos)
+                    self.game.ingame_menu.tower_selected = False
+            
 
     def render(self):
         self.renderer.render()

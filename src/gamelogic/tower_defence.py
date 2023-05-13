@@ -18,11 +18,12 @@ class TowerDefence():
         self.create_route_rect()
         self.game_width = 960
         self.game_height = 720
-        
+
         self.ingame_menu = IngameMenu()
 
         self.wave_nro = 1
         self.health = 5
+        self.money = 20
 
         self.enemy_count = 0
         self.enemy_spawn_interval = 1000
@@ -81,20 +82,25 @@ class TowerDefence():
 
         return True
 
-    def add_tower(self, x, y):
+    def place_tower(self, pos):
         """Adds a tower using the x and y values
 
         Args:
             x : x coordinate of the tower
             y : y coordinate of the tower
         """
-
-        tower = Tower(x, y)
-        if x < self.game_width - (tower.rect.width//2) and y < self.game_height - (tower.rect.height//2):
-
-            if self.valid_tower(tower):
+        
+        tower = Tower(pos)
+        if pos[0] < self.game_width - (tower.rect.width//2) and pos[1] < self.game_height - (tower.rect.height//2) and self.purchase_tower(tower):
                 self.towers.add(tower)
                 self.all_sprites.add(tower)
+
+    def purchase_tower(self, tower):
+        if self.money >= tower.price and self.valid_tower(tower):
+            self.money -= tower.price
+            return True
+
+        return False
 
     def assign_targets(self, tower):
         """Assigns a enemy as a target for a tower
@@ -134,19 +140,13 @@ class TowerDefence():
         display.fill((0, 128, 0))
         pygame.draw.lines(display, (128, 128, 128), False, self.route, 20)
         pygame.draw.line(display, (0, 0, 0), (960, 0), (960, 720), 3)
-
-        font = pygame.font.SysFont("Arial", 32)
-        health_text = font.render("Health: {}".format(
-            self.health), True, (255, 255, 255))
-        display.blit(health_text, (815, 10))
+        self.ingame_menu.draw_all(display, self.health, self.money)
 
         self.all_sprites.draw(display)
 
     def update(self):
         self.spawn_enemies()
         self.enemies.update(self.route)
-        self.towers.update(pygame.time.get_ticks(),
-                           self.enemies, self.all_sprites)
 
         for enemy in self.enemies:
             if enemy.reached_end(self.route):
@@ -157,3 +157,8 @@ class TowerDefence():
         for tower in self.towers:
             if tower.target is None:
                 self.assign_targets(tower)
+
+            if tower.attack(pygame.time.get_ticks()):
+                self.enemies.remove(tower.target)
+                self.all_sprites.remove(tower.target)
+                self.money += 1
