@@ -13,6 +13,8 @@ class TowerDefence():
     def __init__(self):
         self.route = [(50, 0), (50, 200), (400, 200),
                       (400, 400), (800, 400), (800, 720)]
+        
+        self.pause = False
 
         self.route_rect = []
         self.create_route_rect()
@@ -148,8 +150,15 @@ class TowerDefence():
         self.ingame_menu.draw_all(display, self.health, self.money)
 
         self.all_sprites.draw(display)
+        
+        
+    def toggle_pause(self):
+        self.pause = not self.pause
+        self.ingame_menu.pause_button.alt = not self.ingame_menu.pause_button.alt
 
     def update(self):
+        if self.pause:
+            return
         self.spawn_enemies()
         self.enemies.update(self.route)
 
@@ -167,3 +176,22 @@ class TowerDefence():
                 self.enemies.remove(tower.target)
                 self.all_sprites.remove(tower.target)
                 self.money += 1
+                
+    def reset_game(self):
+        self.route = [(50, 0), (50, 200), (400, 200),
+                      (400, 400), (800, 400), (800, 720)]
+        self.pause = False
+        self.ingame_menu.pause_button.alt = False
+        
+        self.create_route_rect()
+
+        self.wave_nro = 1
+        self.health = 5
+        self.money = 20
+
+        self.enemy_count = 0
+        self.last_enemy_spawn = pygame.time.get_ticks()
+
+        self.enemies.empty()
+        self.towers.empty()
+        self.all_sprites.empty()
