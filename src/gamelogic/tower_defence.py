@@ -3,6 +3,7 @@ from pygame.sprite import Group
 from sprites.enemies import Enemies
 from sprites.towers import Tower
 from ui.ingame_menu import IngameMenu
+from ui.score_screen import ScoreScreen
 
 
 class TowerDefence():
@@ -22,10 +23,14 @@ class TowerDefence():
         self.game_height = 720
 
         self.ingame_menu = IngameMenu()
-
+        self.score_screen = ScoreScreen()
+        
+        self.score = 0
         self.wave_nro = 1
+        self.waves = 2
         self.health = 5
         self.money = 20
+        self.game_over = False
 
         self.enemy_count = 0
         self.enemy_spawn_interval = 1000
@@ -147,9 +152,13 @@ class TowerDefence():
         display.fill((0, 128, 0))
         pygame.draw.lines(display, (128, 128, 128), False, self.route, 20)
         pygame.draw.line(display, (0, 0, 0), (960, 0), (960, 720), 3)
-        self.ingame_menu.draw_all(display, self.health, self.money)
 
         self.all_sprites.draw(display)
+        
+        if self.game_over:
+            self.score_screen.draw_all(display)
+            
+        self.ingame_menu.draw_all(display, self.health, self.money, self.wave_nro, self.waves)
         
         
     def toggle_pause(self):
@@ -176,6 +185,9 @@ class TowerDefence():
                 self.enemies.remove(tower.target)
                 self.all_sprites.remove(tower.target)
                 self.money += 1
+        
+        if self.wave_nro > self.waves and not self.enemies:
+            self.end_game()
                 
     def reset_game(self):
         self.route = [(50, 0), (50, 200), (400, 200),
@@ -184,10 +196,12 @@ class TowerDefence():
         self.ingame_menu.pause_button.alt = False
         
         self.create_route_rect()
-
+        
+        self.score = 0
         self.wave_nro = 1
         self.health = 5
         self.money = 20
+        self.game_over = False
 
         self.enemy_count = 0
         self.last_enemy_spawn = pygame.time.get_ticks()
@@ -195,3 +209,14 @@ class TowerDefence():
         self.enemies.empty()
         self.towers.empty()
         self.all_sprites.empty()
+        
+    def calculate_score(self):
+        self.score += (self.wave_nro * 20)
+        self.score += (self.health * self.wave_nro * 5)
+        self.score += (self.money * 2)
+        
+    def end_game(self):
+        self.game_over = True
+        self.toggle_pause()
+        self.calculate_score()
+        self.score_screen.get_score(self.wave_nro, self.health, self.money, self.score)

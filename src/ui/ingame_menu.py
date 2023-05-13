@@ -14,9 +14,9 @@ class IngameMenu():
         self.rect = (self.x, self.y, 318, 720)
         self.bg_color = (118, 109, 103)
         
-        self.buy_tower = Buttons(self.x+20, 150, load_image("tower1.png"), load_image("tower1_alt.png"))
+        self.buy_tower = Buttons(self.x+20, 180, load_image("tower1.png"), load_image("tower1_alt.png"))
         self.sell_button = Buttons(self.x+20, 400, load_image("sell.png"), load_image("sell_alt.png"))
-        self.back_button = Buttons(self.x+160, 620, load_image("back.png"))
+        self.retire_button = Buttons(self.x+160, 620, load_image("retire.png"))
         self.pause_button = Buttons(self.x+20, 620, load_image("pause.png"), load_image("pause_alt.png"))
         
         self.tower_selected = False
@@ -26,20 +26,22 @@ class IngameMenu():
         self.tower_preview_rect = None
         
         
-    def draw_all(self, display, health, money):
+    def draw_all(self, display, health, money, wave_nro, waves):
         health_text = self.font.render(f"Health: {health}" , True, (255, 255, 255))
         money_text = self.font.render(f"Money: {money}" , True, (255, 255, 255))
+        wave_text = self.font.render(f"Wave: {wave_nro}/{waves}" , True, (255, 255, 255))
         towers_font = pygame.font.SysFont("Arial", 36)
         towers_text = towers_font.render("Towers" , True, (255, 255, 255))
         
         
         pygame.draw.rect(display, self.bg_color, self.rect)
-        display.blit(health_text, (self.x+20, 10))
-        display.blit(money_text, (self.x+150, 10))
-        display.blit(towers_text, (self.x+100, 80))
+        display.blit(health_text, (self.x+20, 50))
+        display.blit(money_text, (self.x+150, 50))
+        display.blit(wave_text, (self.x + 100, 10))
+        display.blit(towers_text, (self.x+100, 120))
         self.buy_tower.draw(display)
         self.sell_button.draw(display)
-        self.back_button.draw(display)
+        self.retire_button.draw(display)
         self.pause_button.draw(display)
         
         if self.tower_selected:

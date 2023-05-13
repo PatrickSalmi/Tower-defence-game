@@ -8,6 +8,7 @@ class Gameloop:
         self. clock = clock
         self.game = game
         self.main_menu = MainMenu()
+        self.quit = False
 
     def start(self):
         while True:
@@ -22,7 +23,8 @@ class Gameloop:
         pos = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return False
+                pygame.quit()
+                exit()
             
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if self.main_menu.play_button.rect.collidepoint(pos):
@@ -40,10 +42,12 @@ class Gameloop:
     def handle_game_events(self):
         pos = pygame.mouse.get_pos()
         ig_menu = self.game.ingame_menu
+        score_screen = self.game.score_screen
         ig_menu.set_tower_preview(pos)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return False
+                pygame.quit()
+                exit()
 
             if self.game.health <= 0:
                 return False
@@ -51,11 +55,14 @@ class Gameloop:
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 
-                if ig_menu.back_button.rect.collidepoint(pos):
-                        self.game.reset_game()
-                        return False
+                if ig_menu.retire_button.rect.collidepoint(pos) and not self.game.game_over:
+                        self.game.end_game()
+                        
+                if score_screen.back_button.rect.collidepoint(pos):
+                    self.game.reset_game()
+                    return False
                 
-                if ig_menu.pause_button.rect.collidepoint(pos):
+                if ig_menu.pause_button.rect.collidepoint(pos) and not self.game.game_over:
                     self.game.toggle_pause()
                     ig_menu.sell_mode = False
                 
