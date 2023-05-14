@@ -15,4 +15,5 @@
 | 13.5 | 4   | Added more UI and tower selling function |
 | 13.5 | 4   | Added more UI, scoring and improved wave logic |
 | 14.5 | 6   | Tower improvements, new towers and enemies and more UI |
-| Total | 44 |
+| 14.5 | 6   | Finalized documentation and added new tests |
+| Total | 50 |
