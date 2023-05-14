@@ -28,7 +28,7 @@ class TowerDefence():
 
         self.score = 0
         self.health = 5
-        self.money = 100
+        self.money = 30
         self.game_over = False
 
         self.waves = Waves()
@@ -87,11 +87,13 @@ class TowerDefence():
         Args:
             tower: tower object
         """
-        for enemy in self.waves.enemies:
+        sorted_enemies = sorted(self.waves.enemies, key=lambda enemy: enemy.index)
+        
+        for enemy in sorted_enemies:
             if tower.target is None:
                 tower.calculate_distance(enemy)
-            else:
-                break
+            elif enemy.index > tower.target.index:
+                tower.calculate_distance(enemy)
 
     def create_route_rect(self):
         path_width = 20
@@ -155,8 +157,7 @@ class TowerDefence():
                 self.all_sprites.remove(enemy)
 
         for tower in self.towers:
-            if tower.target is None:
-                self.assign_targets(tower)
+            self.assign_targets(tower)
 
             if tower.attack(pygame.time.get_ticks()):
                 tower.target.health -= tower.damage
@@ -191,7 +192,7 @@ class TowerDefence():
 
         self.score = 0
         self.health = 5
-        self.money = 20
+        self.money = 30
         self.game_over = False
 
         self.waves = Waves()

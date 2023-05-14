@@ -6,7 +6,7 @@ class Waves:
     def __init__(self):
         self.wave_enemy_spawns = {1: [3, 0], 2: [4, 1], 3: [4, 4]}
         self.wave_nro = 1
-        self.total_waves = 2
+        self.total_waves = 3
         self.enemy_spawn_interval = 500
         self.wave_length = 5000
         self.wave_start_time = 0
