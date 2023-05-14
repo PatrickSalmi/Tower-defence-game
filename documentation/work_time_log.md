@@ -11,4 +11,8 @@
 | 23.4 | 3   | Refactoring and fixing imports |
 | 25.4 | 2   | Refactoring |
 | 02.5 | 7   | Added health, towers and more tests |
-| Total | 26 |
+| 13.5 | 4   | Improved towers and added in-game menu |
+| 13.5 | 4   | Added more UI and tower selling function |
+| 13.5 | 4   | Added more UI, scoring and improved wave logic |
+| 14.5 | 6   | Tower improvements, new towers and enemies and more UI |
+| Total | 44 |
