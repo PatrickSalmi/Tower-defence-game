@@ -7,6 +7,12 @@ from sprites.towers import Tower
 class IngameMenu():
 
     def __init__(self):
+        """Class representing the in-game menu.
+
+        Initializes the in-game menu with its attributes and buttons.
+
+        """
+
         pygame.font.init()
         self.font = pygame.font.SysFont("Arial", 28)
 
@@ -32,6 +38,17 @@ class IngameMenu():
         self.tower_preview_rect = None
 
     def draw_all(self, display, health, money, wave_nro, waves):
+        """Draws the entire in-game menu on the game display.
+
+        Args:
+            display: The game display surface to draw on.
+            health (int): The current health of the player.
+            money (int): The amount of money the player has.
+            wave_nro (int): The current wave number.
+            waves (int): The total number of waves.
+
+        """
+
         health_text = self.font.render(
             f"Health: {health}", True, (255, 255, 255))
         money_text = self.font.render(f"Money: {money}", True, (255, 255, 255))
@@ -45,13 +62,13 @@ class IngameMenu():
         display.blit(money_text, (self.x+150, 50))
         display.blit(wave_text, (self.x + 100, 10))
         display.blit(towers_text, (self.x+100, 120))
-        
+
         self.basic_tower.draw(display)
         self.sniper_tower.draw(display)
         self.sell_button.draw(display)
         self.retire_button.draw(display)
         self.pause_button.draw(display)
-        
+
         self.draw_tower_info(display, self.x+40, 270)
         self.draw_tower_info(display, self.x+130, 270, "sniper")
 
@@ -66,33 +83,38 @@ class IngameMenu():
             self.sell_button.alt = False
 
     def set_tower_preview(self, pos):
+        """Sets the tower preview image and its position.
+
+        Args:
+            pos (tuple): The position (x, y) where the tower preview should be centered.
+
+        """
         if self.tower_type == "sniper":
             self.tower_preview = self.sniper_tower.image
         else:
             self.tower_preview = self.basic_tower.image
         self.tower_preview_rect = self.tower_preview.get_rect()
         self.tower_preview_rect.center = pos
-        
-    def draw_tower_info(self,display, x, y, tower_type=None):
+
+    def draw_tower_info(self, display, x, y, tower_type=None):
         info_font = pygame.font.SysFont("Arial", 16)
         line_heigth = 18
-        tower = Tower((0,0), tower_type)
-        
+        tower = Tower((0, 0), tower_type)
+
         cost_text = f"cost: {tower.price}"
-        cost_surface = info_font.render (cost_text, True, (255, 255, 255))
-        
+        cost_surface = info_font.render(cost_text, True, (255, 255, 255))
+
         damage_text = f"damage: {tower.damage}"
-        damage_surface = info_font.render (damage_text, True, (255, 255, 255))
-        
+        damage_surface = info_font.render(damage_text, True, (255, 255, 255))
+
         range_text = f"range: {tower.range // 10}"
-        range_surface = info_font.render (range_text, True, (255, 255, 255))
-        
+        range_surface = info_font.render(range_text, True, (255, 255, 255))
+
         fire_rate_text = f"fire rate: {10000//tower.cooldown}"
-        fire_rate_surface = info_font.render (fire_rate_text, True, (255, 255, 255))
-        
+        fire_rate_surface = info_font.render(
+            fire_rate_text, True, (255, 255, 255))
+
         display.blit(cost_surface, (x, y))
         display.blit(damage_surface, (x, y + line_heigth))
         display.blit(range_surface, (x, y + (line_heigth*2)))
         display.blit(fire_rate_surface, (x, y + (line_heigth*3)))
-        
-        
