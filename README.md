@@ -1,6 +1,6 @@
 # Tower defence game
 
-A simple tower defence game.
+A simple tower defence game including a scoreboard, two tower types and two enemy types.
 
 ## Release
 
