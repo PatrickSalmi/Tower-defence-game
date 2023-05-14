@@ -121,6 +121,10 @@ class TowerDefence():
         pygame.draw.line(display, (0, 0, 0), (960, 0), (960, 720), 3)
 
         self.all_sprites.draw(display)
+        
+        for tower in self.towers:
+            if tower.clicked:
+                tower.draw_range(display)
 
         if self.game_over:
             self.score_screen.draw_all(display)
@@ -152,6 +156,9 @@ class TowerDefence():
                 self.waves.enemies.remove(tower.target)
                 self.all_sprites.remove(tower.target)
                 self.money += 1
+        
+        if self.health <= 0:
+            self.end_game()
 
         if self.waves.wave_nro == self.waves.total_waves and not self.waves.enemies and self.waves.enemy_count == self.waves.wave_enemy_count[self.waves.total_waves-1]:
             self.end_game()

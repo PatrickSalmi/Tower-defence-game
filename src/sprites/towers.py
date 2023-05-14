@@ -14,6 +14,7 @@ class Tower(pygame.sprite.Sprite):
         self.range = 200
         self.cooldown = 2000
         self.last_attack_time = 0
+        self.clicked = False
         self.target = None
 
     def attack(self, current_time):
@@ -31,3 +32,7 @@ class Tower(pygame.sprite.Sprite):
             (enemy.rect.centery - self.rect.centery) ** 2
         if distance <= self.range ** 2:
             self.target = enemy
+
+    def draw_range(self, display):
+        circle_center = self.rect.center
+        pygame.draw.circle(display, (255, 0, 0), circle_center, self.range, 1)

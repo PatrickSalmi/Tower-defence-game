@@ -32,7 +32,7 @@ class ScoreBoard():
                     f"{i+1}. ...", True, (255, 255, 255))
 
             if i == 9:
-                display.blit(score_text, (585, score_y))
+                display.blit(score_text, (584, score_y))
 
             else:
                 display.blit(score_text, (600, score_y))

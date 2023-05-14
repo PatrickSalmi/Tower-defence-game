@@ -1,6 +1,7 @@
 import pygame
 from ui.buttons import Buttons
 from load_image import load_image
+from sprites.towers import Tower
 
 
 class IngameMenu():
@@ -45,6 +46,8 @@ class IngameMenu():
         self.pause_button.draw(display)
         
         if self.tower_selected:
+            tower = Tower(self.tower_preview_rect.center)
+            tower.draw_range(display)
             display.blit(self.tower_preview, self.tower_preview_rect)
         
         if self.sell_mode:

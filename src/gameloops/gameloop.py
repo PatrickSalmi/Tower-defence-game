@@ -68,16 +68,14 @@ class Gameloop:
         ig_menu = self.game.ingame_menu
         score_screen = self.game.score_screen
         ig_menu.set_tower_preview(pos)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-
-            if self.game.health <= 0:
-                return False
             
-
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                tower_clicked = False
                 
                 if ig_menu.retire_button.rect.collidepoint(pos) and not self.game.game_over:
                         self.game.end_game()
@@ -91,6 +89,15 @@ class Gameloop:
                     ig_menu.sell_mode = False
                 
                 if not self.game.pause:
+                    
+                    for tower in self.game.towers:
+                        if tower.rect.collidepoint(pos):
+                            tower.clicked = not tower.clicked
+                            tower_clicked = True
+                            
+                    if not tower_clicked:
+                        for tower in self.game.towers:
+                            tower.clicked = False
                 
                     if ig_menu.buy_tower.rect.collidepoint(pos) and not ig_menu.sell_mode:
                         if not ig_menu.tower_selected:
