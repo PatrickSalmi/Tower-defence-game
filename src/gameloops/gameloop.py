@@ -74,56 +74,72 @@ class Gameloop:
                 pygame.quit()
                 exit()
             
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                tower_clicked = False
-                
-                if ig_menu.retire_button.rect.collidepoint(pos) and not self.game.game_over:
-                        self.game.end_game()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    tower_clicked = False
+                    
+                    if ig_menu.retire_button.rect.collidepoint(pos) and not self.game.game_over:
+                            self.game.end_game()
+                            
+                    if score_screen.back_button.rect.collidepoint(pos):
+                        self.game.reset_game()
+                        return False
+                    
+                    if ig_menu.pause_button.rect.collidepoint(pos) and not self.game.game_over:
+                        self.game.toggle_pause()
+                        ig_menu.sell_mode = False
+                    
+                    if not self.game.pause:
                         
-                if score_screen.back_button.rect.collidepoint(pos):
-                    self.game.reset_game()
-                    return False
-                
-                if ig_menu.pause_button.rect.collidepoint(pos) and not self.game.game_over:
-                    self.game.toggle_pause()
-                    ig_menu.sell_mode = False
-                
-                if not self.game.pause:
-                    
-                    for tower in self.game.towers:
-                        if tower.rect.collidepoint(pos):
-                            tower.clicked = not tower.clicked
-                            tower_clicked = True
-                            
-                    if not tower_clicked:
-                        for tower in self.game.towers:
-                            tower.clicked = False
-                
-                    if ig_menu.buy_tower.rect.collidepoint(pos) and not ig_menu.sell_mode:
-                        if not ig_menu.tower_selected:
-                            ig_menu.tower_selected = True
-
-                    elif ig_menu.tower_selected:
-                        self.game.place_tower(pos)
-                        ig_menu.tower_selected = False
-                        ig_menu.tower_preview = None
-                    
-                    elif ig_menu.sell_button.rect.collidepoint(pos) and not ig_menu.tower_selected:
-                        if not ig_menu.sell_mode:
-                            ig_menu.sell_mode = True
-                        else:
-                            ig_menu.sell_mode = False
-                            
-                    elif ig_menu.sell_mode:
                         for tower in self.game.towers:
                             if tower.rect.collidepoint(pos):
-                                self.game.sell_tower(tower)
-                                break
-                            
-                    else:
-                        ig_menu.sell_mode = False
-                        ig_menu.tower_selected = False
+                                tower.clicked = not tower.clicked
+                                tower_clicked = True
+                                
+                        if not tower_clicked:
+                            for tower in self.game.towers:
+                                tower.clicked = False
                     
+                        if not ig_menu.sell_mode and ig_menu.basic_tower.rect.collidepoint(pos):
+                            ig_menu.tower_type = None
+                            
+                            if not ig_menu.tower_selected:
+                                ig_menu.tower_selected = True
+                            
+                        elif not ig_menu.sell_mode and ig_menu.sniper_tower.rect.collidepoint(pos):
+                            ig_menu.tower_type = "sniper"
+                                
+                            if not ig_menu.tower_selected:
+                                ig_menu.tower_selected = True
+
+                        elif ig_menu.tower_selected:
+                            self.game.place_tower(pos, ig_menu.tower_type)
+                            ig_menu.tower_selected = False
+                            ig_menu.tower_preview = None
+                        
+                        elif ig_menu.sell_button.rect.collidepoint(pos) and not ig_menu.tower_selected:
+                            if not ig_menu.sell_mode:
+                                ig_menu.sell_mode = True
+                            else:
+                                ig_menu.sell_mode = False
+                                
+                        elif ig_menu.sell_mode:
+                            for tower in self.game.towers:
+                                if tower.rect.collidepoint(pos):
+                                    self.game.sell_tower(tower)
+                                    break
+                                
+                        else:
+                            ig_menu.sell_mode = False
+                            ig_menu.tower_selected = False
+                    
+                elif event.button == 3:
+                    ig_menu.sell_mode = False
+                    ig_menu.tower_selected = False
+                    ig_menu.tower_preview = None
+                    for tower in self.game.towers:
+                        tower.clicked = False
+                        
 
     def render(self):
         self.renderer.render()

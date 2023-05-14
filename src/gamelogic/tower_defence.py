@@ -28,7 +28,7 @@ class TowerDefence():
 
         self.score = 0
         self.health = 5
-        self.money = 20
+        self.money = 100
         self.game_over = False
 
         self.waves = Waves()
@@ -56,7 +56,7 @@ class TowerDefence():
 
         return True
 
-    def place_tower(self, pos):
+    def place_tower(self, pos, tower_type=None):
         """Adds a tower using the x and y values
 
         Args:
@@ -64,7 +64,7 @@ class TowerDefence():
             y : y coordinate of the tower
         """
 
-        tower = Tower(pos)
+        tower = Tower(pos, tower_type)
         if pos[0] < self.game_width - (tower.rect.width//2) and pos[1] < self.game_height - (tower.rect.height//2) and self.purchase_tower(tower):
             self.towers.add(tower)
             self.all_sprites.add(tower)
@@ -143,6 +143,12 @@ class TowerDefence():
         self.waves.update(self.route, self.all_sprites)
 
         for enemy in self.waves.enemies:
+            enemy.check_damage(pygame.time.get_ticks())
+            if enemy.health <= 0:
+                self.waves.enemies.remove(enemy)
+                self.all_sprites.remove(enemy)
+                self.money += 1
+                
             if enemy.reached_end(self.route):
                 self.health -= 1
                 self.waves.enemies.remove(enemy)
@@ -153,14 +159,13 @@ class TowerDefence():
                 self.assign_targets(tower)
 
             if tower.attack(pygame.time.get_ticks()):
-                self.waves.enemies.remove(tower.target)
-                self.all_sprites.remove(tower.target)
-                self.money += 1
+                tower.target.health -= tower.damage
+                tower.target.take_damage(pygame.time.get_ticks())
         
         if self.health <= 0:
             self.end_game()
 
-        if self.waves.wave_nro == self.waves.total_waves and not self.waves.enemies and self.waves.enemy_count == self.waves.wave_enemy_count[self.waves.total_waves-1]:
+        if self.waves.wave_nro == self.waves.total_waves and not self.waves.enemies and self.waves.total_enemy_count == sum(self.waves.wave_enemy_spawns[self.waves.total_waves]):
             self.end_game()
 
     def calculate_score(self):
