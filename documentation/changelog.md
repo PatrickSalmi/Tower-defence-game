@@ -22,6 +22,7 @@
 ## Week 7
 
 - improved tower placement logic
+- improved wave logic
 - added in-game menu
 - added main menu
 - added pause function
