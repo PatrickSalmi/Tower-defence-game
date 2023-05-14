@@ -9,6 +9,8 @@ A simple tower defence game including a scoreboard, two tower types and two enem
 ## Documentation
 [Requirements specifications](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/requirements_specifications.md)
 
+[Instructions](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/Instructions.md)
+
 [Architecture](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/architecture.md)
 
 [Testing](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/Testing.md)
