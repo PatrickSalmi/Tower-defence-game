@@ -2,9 +2,10 @@
 
 A simple tower defence game including a scoreboard, two tower types and two enemy types.
 
-## Release
+## Releases
 
 [Week 5](https://github.com/PatrickSalmi/Tower-defence-game/releases/tag/viikko5)
+
 [Final](https://github.com/PatrickSalmi/Tower-defence-game/releases/tag/Final)
 
 ## Documentation
