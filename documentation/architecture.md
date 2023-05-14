@@ -1,5 +1,5 @@
-# architecture
+# Architecture
 
-## package diagram
+## Package and Classes diagram
 
-![package diagram](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/pictures/package_diagram.png)
+![package diagram](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/pictures/Packaging_diagram.png)
