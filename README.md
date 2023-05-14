@@ -4,7 +4,7 @@ A simple tower defence game.
 
 ## Release
 
-[Release](https://github.com/PatrickSalmi/Tower-defence-game/releases/tag/viikko5)
+[Week 5](https://github.com/PatrickSalmi/Tower-defence-game/releases/tag/viikko5)
 
 ## Documentation
 [Requirements specifications](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/requirements_specifications.md)
