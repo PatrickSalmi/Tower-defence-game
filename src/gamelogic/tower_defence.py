@@ -4,6 +4,7 @@ from gamelogic.wave_logic import Waves
 from sprites.towers import Tower
 from ui.ingame_menu import IngameMenu
 from ui.score_screen import ScoreScreen
+from scores import save_scores
 
 
 class TowerDefence():
@@ -164,6 +165,7 @@ class TowerDefence():
         self.game_over = True
         self.pause = True
         self.calculate_score()
+        save_scores(self.score)
         self.score_screen.get_score(
             self.waves.wave_nro, self.health, self.money, self.score)
         

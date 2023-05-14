@@ -1,5 +1,6 @@
 import pygame
 from ui.main_menu import MainMenu
+from ui.score_board import ScoreBoard
 
 class Gameloop:
     def __init__(self, display, renderer, clock, game):
@@ -8,6 +9,7 @@ class Gameloop:
         self. clock = clock
         self.game = game
         self.main_menu = MainMenu()
+        self.score_board = ScoreBoard()
         self.quit = False
 
     def start(self):
@@ -16,7 +18,6 @@ class Gameloop:
                 break
 
             self.main_menu.draw_all(self.display)
-            self.clock.tick(60)
             pygame.display.update()
             
     def handle_menu_events(self):
@@ -29,6 +30,29 @@ class Gameloop:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 if self.main_menu.play_button.rect.collidepoint(pos):
                     self.play()
+                if self.main_menu.scores_button.rect.collidepoint(pos):
+                    self.score_board.load_scores()
+                    self.scores()
+                    
+    def scores(self):
+        while True:
+            if self.handle_scores_events() == False:
+                break
+            
+            self.score_board.draw_all(self.display)
+            pygame.display.update()
+            
+    def handle_scores_events(self):
+        pos = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+                
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if self.score_board.back_button.rect.collidepoint(pos):
+                    return False
+        
             
     def play(self):
         while True:
