@@ -6,7 +6,7 @@ class Gameloop:
     def __init__(self, display, renderer, clock, game):
         self.display = display
         self.renderer = renderer
-        self. clock = clock
+        self.clock = clock
         self.game = game
         self.main_menu = MainMenu()
         self.score_board = ScoreBoard()

@@ -194,8 +194,11 @@ class TowerDefence():
         self.health = 5
         self.money = 30
         self.game_over = False
+        
+        self.ingame_menu = IngameMenu()
+        self.score_screen = ScoreScreen()
 
-        self.waves = Waves()
+        self.waves.wave_start_time = pygame.time.get_ticks()
         self.waves.enemies.empty()
         self.towers.empty()
         self.all_sprites.empty()

@@ -18,7 +18,6 @@ class Enemies(pygame.sprite.Sprite):
             self.damage_image = load_image("enemy_alt.png")
             self.speed = 2
             self.health = 4
-            self.speed = 2
             
         self.width = self.image.get_width()
         self.height = self.image.get_height()
