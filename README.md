@@ -11,6 +11,8 @@ A simple tower defence game.
 
 [Architecture](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/architecture.md)
 
+[Testing](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/Testing.md)
+
 [Work time log](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/work_time_log.md)
 
 [Changelog](https://github.com/PatrickSalmi/Tower-defence-game/blob/master/documentation/changelog.md)
