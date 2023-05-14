@@ -18,7 +18,7 @@ A mouse is used to navigate and play the game.
 - The player can place towers on the level along the path which deal damage to enemies
 - The game features money which is used to buy towers
 - Money is earned by defeating enemies and selling towers
-- Once all waves of enemies have been defeated, the level is over
+- Once all waves of enemies have been defeated, the game is won
 - The player can pause the game
 
 ## Ideas for further development
